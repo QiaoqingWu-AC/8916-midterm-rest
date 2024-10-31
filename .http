@@ -1,0 +1,9 @@
+### Welcome Message
+GET http://localhost:8000/
+
+## GET all the students
+GET http://localhost:8000/students
+
+## GET a student by id
+GET http://localhost:8000/students/1
+
