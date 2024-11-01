@@ -14,8 +14,9 @@ POST http://localhost:8000/students
 Content-Type: application/json
 
 {
-  "studentName": "Charlie",
-  "age": 22
+  "name": "Charlie",
+  "grade": "A",
+  "email": "charlie@example.com"
 }
 
 ### PUT update an existing student by id
@@ -23,8 +24,9 @@ PUT http://localhost:8000/students/1
 Content-Type: application/json
 
 {
-  "studentName": "Alice Updated",
-  "age": 26
+  "name": "Alice Updated",
+  "grade": "A+",
+  "email": "alice.updated@example.com"
 }
 
 ### DELETE delete an existing student by id

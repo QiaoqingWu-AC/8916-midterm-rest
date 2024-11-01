@@ -1,16 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-// Initialize the express application and port number
 const app = express();
 const PORT = 8000;
 
 app.use(bodyParser.json());
 
-// In-memory database of users
+// In-memory data store
 const students = [
-  { id: 1, studentName: "Alice", age: 20 },
-  { id: 2, studentName: "Bob", age: 21 },
+  { id: 1, name: "Alice", grade: "A", email: "alice@example.com" },
+  { id: 2, name: "Bob", grade: "B", email: "bob@example.com" },
 ];
 let currentId = 3; // Starting ID for new students
 
@@ -20,7 +19,7 @@ app.get('/', (req, res) => {
   res.json('HELLO FROM HOMEPAGE');
 });
 
-// GET /students: retrieve all the students data
+// GET /students: retrieve all students
 app.get('/students', (req, res) => {
   res.send(students);
 });
@@ -37,11 +36,11 @@ app.get("/students/:id", (req, res) => {
 
 // POST /students: Add a new student
 app.post('/students', (req, res) => {
-  const { studentName, age } = req.body;
-  if (!studentName || age === undefined) {
+  const { name, grade, email } = req.body;
+  if (!name || !grade || !email) {
     return res.status(400).json({ message: "Missing required fields" });
   }
-  const newStudent = { id: currentId++, studentName, age };
+  const newStudent = { id: currentId++, name, grade, email };
   students.push(newStudent);
   res.status(201).json(newStudent);
 });
@@ -49,13 +48,14 @@ app.post('/students', (req, res) => {
 // PUT /students/{id}: Update an existing student by ID
 app.put('/students/:id', (req, res) => {
   const studentId = parseInt(req.params.id, 10);
-  const { studentName, age } = req.body;
+  const { name, grade, email } = req.body;
   const student = students.find((s) => s.id === studentId);
   if (!student) {
     return res.status(404).json({ message: "Student not found" });
   }
-  if (studentName) student.studentName = studentName;
-  if (age !== undefined) student.age = age;
+  if (name) student.name = name;
+  if (grade) student.grade = grade;
+  if (email) student.email = email;
   res.json(student);
 });
 
